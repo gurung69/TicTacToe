@@ -14,7 +14,7 @@ class TicTacToe:
     self.canvas.pack()
     self.canvas.bind("<Button-1>", self.fill_position)
 
-    self.board = np.zeros((3,3))
+    self.board = np.full((3,3), None)
 
     self.draw_board()
     self.win.mainloop()
@@ -28,13 +28,15 @@ class TicTacToe:
     position = np.array([event.x, event.y])
     position = (position//(size/3)).astype(int)
 
-    if self.curr_player == "X":
-      self.canvas.create_line((size/3)*position[0]+symbol_width, (size/3)*position[1]+symbol_width, (size/3)*position[0]+(size/3)-symbol_width, (size/3)*position[1]+(size/3)-symbol_width, width=symbol_width)
-      self.canvas.create_line((size/3)*position[0]+(size/3)-symbol_width, (size/3)*position[1]+symbol_width, (size/3)*position[0]+symbol_width, (size/3)*position[1]+(size/3)-symbol_width, width=symbol_width)
-    if self.curr_player == "O":
-      self.canvas.create_oval((size/3)*position[0]+symbol_width, (size/3)*position[1]+symbol_width, (size/3)*position[0]+(size/3)-symbol_width, (size/3)*position[1]+(size/3)-symbol_width, width=symbol_width)
+    if self.board[position[1], position[0]] == None:
+      if self.curr_player == "X":
+        self.canvas.create_line((size/3)*position[0]+symbol_width, (size/3)*position[1]+symbol_width, (size/3)*position[0]+(size/3)-symbol_width, (size/3)*position[1]+(size/3)-symbol_width, width=symbol_width)
+        self.canvas.create_line((size/3)*position[0]+(size/3)-symbol_width, (size/3)*position[1]+symbol_width, (size/3)*position[0]+symbol_width, (size/3)*position[1]+(size/3)-symbol_width, width=symbol_width)
+      if self.curr_player == "O":
+        self.canvas.create_oval((size/3)*position[0]+symbol_width, (size/3)*position[1]+symbol_width, (size/3)*position[0]+(size/3)-symbol_width, (size/3)*position[1]+(size/3)-symbol_width, width=symbol_width)
 
-    self.switch_player()
+      self.switch_player()
+      self.board[position[1], position[0]] = self.curr_player;
   
   def switch_player(self):
     if self.curr_player == "X":
