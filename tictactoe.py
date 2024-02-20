@@ -20,8 +20,6 @@ class TicTacToe:
     self.board = np.full((3,3), None)
 
     self.score_frame = Frame(self.win, width=size, height=size)
-
-    self.draw_board()
     
 
   def draw_board(self):
@@ -67,8 +65,14 @@ class TicTacToe:
       if self.curr_player == "O":
         self.canvas.create_oval((size/3)*position[0]+symbol_width, (size/3)*position[1]+symbol_width, (size/3)*position[0]+(size/3)-symbol_width, (size/3)*position[1]+(size/3)-symbol_width, width=symbol_width, outline=color_O)
 
-      self.switch_player()
       self.board[position[1], position[0]] = self.curr_player;
+
+      if self.check_winner():
+        self.score[self.curr_player] += 1
+        self.display_score()
+
+      self.switch_player()
+      
   
   def switch_player(self):
     if self.curr_player == "X":
@@ -77,9 +81,20 @@ class TicTacToe:
       self.curr_player = "X"
 
   def check_winner(self):
-    return
+    for i in range(3):
+      if self.board[i, 0] == self.board[i, 1] == self.board[i,2] != None:
+        return True
+      if self.board[0, i] == self.board[1, i] == self.board[2, i] != None:
+        return True
+    if self.board[0, 0] == self.board[1,1] == self.board[2, 2] != None:
+      return True
+    if self.board[0, 2] == self.board[1, 1] == self.board[2, 0] != None:
+      return True
+    
+    return False 
   
   def start(self):
+    self.draw_board()
     self.win.mainloop()
     
 
