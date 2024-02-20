@@ -4,8 +4,8 @@
 This is a interactive multiplayer TicTacToe Game made using Python and GUI library Tkinter.
 
 ### ScreenShots
-![Alt text](img/screenshot1.png)
-![Alt text](img/screenshot2.png)
+<img src="./img/screenshot1.png" width=300>
+<img src="img/screenshot2.png" width=300>
 
 ### Game Control
 1. Player X starts the game
