@@ -13,6 +13,7 @@ class TicTacToe:
     self.score = {"X":0, "O": 0}
 
     self.win = Tk()
+    self.win.title("TicTacToe")
     self.win.geometry("400x400")
     self.canvas = Canvas(self.win, width=size, height=size)
     self.canvas.bind("<Button-1>", self.fill_position)
@@ -38,20 +39,21 @@ class TicTacToe:
     
 
     if self.draw:
-      Label(self.score_frame, text="It's a tie", font="Fredoka 25 bold", fg="red").pack()
+      Label(self.score_frame, text="It's a tie", font="Fredoka 25 bold", fg="red").grid(row=1, pady=15)
     else:
-      Label(self.score_frame, text="Player "+self.curr_player +" win", font="Fredoka 25 bold", fg="green").pack()
+      Label(self.score_frame, text="Player "+self.curr_player +" win", font="Fredoka 25 bold", fg="green").grid(row=1, pady=20)
 
-    Label(self.score_frame, text="Scores", font="Fredoka 20 bold").pack()
-    Label(self.score_frame, text="Player X : \t"+str(self.score["X"]), font="Fredoka 20 bold").pack()
-    Label(self.score_frame, text="Player O : \t"+str(self.score["O"]), font="Fredoka 20 bold").pack()
+    Label(self.score_frame, text="Scores", font="Fredoka 20 bold").grid(row=2, pady=10)
+    Label(self.score_frame, text="Player X : \t"+str(self.score["X"]), font="Fredoka 20 bold").grid(row=3,pady=5)
+    Label(self.score_frame, text="Player O : \t"+str(self.score["O"]), font="Fredoka 20 bold").grid(row=4, pady=5)
 
-    Button(self.score_frame, text="Play Again", command=self.restart_game).pack()
-    Button(self.score_frame, text="Quit", command=self.win.destroy).pack()
+    Button(self.score_frame, text="Play Again", command=self.restart_game).grid(row=5,pady=5)
+    Button(self.score_frame, text="Quit", command=self.win.destroy).grid(row=6)
 
   def restart_game(self):
     self.board = np.full((3,3), None)
     self.curr_player = "X"
+    self.draw = False
     self.draw_board()
   
   def fill_position(self, event):
@@ -69,6 +71,10 @@ class TicTacToe:
 
       if self.check_winner():
         self.score[self.curr_player] += 1
+        self.display_score()
+      
+      self.check_draw()
+      if self.draw:
         self.display_score()
 
       self.switch_player()
@@ -92,6 +98,10 @@ class TicTacToe:
       return True
     
     return False 
+  
+  def check_draw(self):
+    if None not in self.board:
+      self.draw = True
   
   def start(self):
     self.draw_board()
