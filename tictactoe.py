@@ -1,7 +1,7 @@
 from tkinter import *
 import numpy as np
 
-size = 400
+size = 400 # size for canvas
 color_X = "red"
 color_O = "blue"
 symbol_width = 20
